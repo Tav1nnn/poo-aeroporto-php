@@ -41,7 +41,7 @@ class Voo {
         
     }
 
-    public function adicionarPassageiro (Passageiro $passageiro) {
+    public function adicionarPassageiro (Passagem $passageiro) {
 
     }
 
