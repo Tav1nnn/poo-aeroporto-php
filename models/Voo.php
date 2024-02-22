@@ -45,7 +45,7 @@ class Voo {
 
     }
 
-    public function removerPassageiro (Passageiro $passageiro) {
+    public function removerPassageiro (Passagem $passageiro) {
         
     }
 }
