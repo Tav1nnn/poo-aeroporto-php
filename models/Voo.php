@@ -3,7 +3,7 @@
 require_once 'Aeroporto.php';
 require_once 'Aeroporto.php';
 require_once 'Tripulante.php';
-require_once 'Passageiro.php';
+require_once 'Passagem.php';
 
 class Voo {
     public Aeroporto $origem;
