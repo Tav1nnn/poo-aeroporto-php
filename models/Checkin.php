@@ -4,8 +4,8 @@ require_once 'Usuario.php';
 require_once 'Passagem.php';
 
 class Checkin {
-    public Usuario $usuario;
-    public Passagem $passagem;
+    private Usuario $usuario;
+    private Passagem $passagem;
 
     public function __construct() {
         
@@ -13,5 +13,21 @@ class Checkin {
 
     public function validar($usuario, $passagem) {
         
+    }
+
+    public function getUsuario(): Usuario {
+        return $this->usuario;
+    }
+
+    public function setUsuario(Usuario $usuario): void {
+        $this->usuario = $usuario;
+    }
+
+    public function getPassagem(): Passagem {
+        return $this->passagem;
+    }
+
+    public function setPassagem(Passagem $passagem): void {
+        $this->passagem = $passagem;
     }
 }
