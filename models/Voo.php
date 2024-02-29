@@ -6,15 +6,15 @@ require_once 'Tripulante.php';
 require_once 'Passagem.php';
 
 class Voo {
-    public Aeroporto $origem;
-    public Aeroporto $destino;
-    public $escalas = array(); 
-    public DateTime $horarioSaida;
-    public DateTime $horarioChegada;
-    public Aeronave $aeronave;
-    public $tripulacao = array();
-    public $passageiros = array();
-    public string $status;
+    private Aeroporto $destino;
+    private Aeroporto $origem;
+    private $escalas = array(); 
+    private DateTime $horarioSaida;
+    private DateTime $horarioChegada;
+    private Aeronave $aeronave;
+    private $tripulacao = array();
+    private $passageiros = array();
+    private string $status;
 
 
     public function __construct() {
@@ -47,5 +47,73 @@ class Voo {
 
     public function removerPassageiro (Passagem $passageiro) {
         
+    }
+
+    public function getDestino(): Aeroporto {
+        return $this->destino;
+    }
+
+    public function setDestino(Aeroporto $destino): void {
+        $this->destino = $destino;
+    }
+
+    public function getOrigem(): Aeroporto {
+        return $this->origem;
+    }
+
+    public function setOrigem(Aeroporto $origem): void {
+        $this->origem = $origem;
+    }
+
+    public function getEscalas(): array {
+        return $this->escalas;
+    }
+
+    public function getHorarioSaida(): DateTime {
+        return $this->horarioSaida;
+    }
+
+    public function setHorarioSaida(DateTime $horarioSaida): void {
+        $this->horarioSaida = $horarioSaida;
+    }
+
+    public function getHorarioChegada(): DateTime {
+        return $this->horarioChegada;
+    }
+
+    public function setHorarioChegada(DateTime $horarioChegada): void {
+        $this->horarioChegada = $horarioChegada;
+    }
+
+    public function getAeronave(): Aeronave {
+        return $this->aeronave;
+    }
+
+    public function setAeronave(Aeronave $aeronave): void {
+        $this->aeronave = $aeronave;
+    }
+
+    public function getTripulacao(): array {
+        return $this->tripulacao;
+    }
+
+    public function setTripulacao(array $tripulacao): void {
+        $this->tripulacao = $tripulacao;
+    }
+
+    public function getPassageiros(): array {
+        return $this->passageiros;
+    }
+
+    public function setPassageiros(array $passageiros): void {
+        $this->passageiros = $passageiros;
+    }
+
+    public function getStatus(): string {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): void {
+        $this->status = $status;
     }
 }
