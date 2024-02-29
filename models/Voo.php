@@ -8,8 +8,8 @@ require_once 'Passagem.php';
 class Voo {
     public Aeroporto $origem;
     public Aeroporto $destino;
-    public $escalas = array(); // duvida com jucelino
-    public DateTime $horarioSaida; // duvida com jucelino
+    public $escalas = array(); 
+    public DateTime $horarioSaida;
     public DateTime $horarioChegada;
     public Aeronave $aeronave;
     public $tripulacao = array();
