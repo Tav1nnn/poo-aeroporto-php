@@ -1,0 +1,18 @@
+{
+    "name": "otavio/poo-aeroporto-php",
+    "description": "trabalho de poo",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Otavio\\PooAeroportoPhp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Otavio Marques",
+            "email": "marquesotavio251204@gmail.com"
+        }
+    ],
+    "require": {}
+}
