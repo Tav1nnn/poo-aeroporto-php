@@ -1,9 +1,7 @@
 <?php
 
-require_once 'Aeroporto.php';
-require_once 'Aeroporto.php';
-require_once 'Tripulante.php';
-require_once 'Passagem.php';
+namespace otavio\PooAeroportoPhp;
+use DateTime;
 
 class Voo {
     private Aeroporto $destino;

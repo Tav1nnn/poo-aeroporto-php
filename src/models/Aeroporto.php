@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Voo.php';
+namespace otavio\PooAeroportoPhp;
 
 class Aeroporto {
     

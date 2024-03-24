@@ -1,5 +1,7 @@
 <?php
 
+namespace otavio\PooAeroportoPhp;
+
 class Usuario {
     private string $nome;
     private string $email;

@@ -1,7 +1,6 @@
 <?php
 
-require_once 'Usuario.php';
-require_once 'Passagem.php';
+namespace otavio\PooAeroportoPhp;
 
 class Checkin {
     private Usuario $usuario;

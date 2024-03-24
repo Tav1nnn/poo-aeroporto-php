@@ -1,5 +1,7 @@
 <?php
 
+namespace otavio\PooAeroportoPhp;
+
 class Aeronave {
     private string $modelo;
     private int $capacidade;

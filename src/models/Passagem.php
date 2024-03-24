@@ -1,7 +1,6 @@
 <?php
 
-require_once 'Voo.php';
-require_once 'Usuario.php';
+namespace otavio\PooAeroportoPhp;
 
 class Passagem {
     private string $codBilhete;

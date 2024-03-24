@@ -1,5 +1,7 @@
 <?php
 
+namespace otavio\PooAeroportoPhp;
+
 class Tripulante {
     
     private String $nome;

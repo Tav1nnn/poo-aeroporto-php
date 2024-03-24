@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Usuario.php';
+namespace otavio\PooAeroportoPhp;
 
 class Bagagem {
     private float $peso;
