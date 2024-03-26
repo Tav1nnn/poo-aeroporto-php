@@ -4,22 +4,13 @@ namespace otavio\PooAeroportoPhp;
 
 class Usuario extends Pessoa
 {
-    private string $senha;
-    private bool $isAdm;
+    private string $cidade;
+    private string $endereco;
 
-    public function __construct(string $senha)
+    public function __construct(string $nome, string $email, string $cpf, string $cidade, string $endereco)
     {
-        $this->senha = $senha;
-        $this->isAdm = null;
+        $this->cidade = $cidade;
+        $this->endereco = $endereco;
+        parent::__construct($nome, $email,$cpf);
     }
-
-    public function getSenha(): string {return $this->senha;}
-
-	public function getIsAdm(): bool {return $this->isAdm;}
-
-	public function setSenha(string $senha): void {$this->senha = $senha;}
-
-	public function setIsAdm(bool $isAdm): void {$this->isAdm = $isAdm;}
-
-	
 }

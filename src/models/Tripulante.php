@@ -2,37 +2,36 @@
 
 namespace otavio\PooAeroportoPhp;
 
-class Tripulante extends Pessoa{
-    
-    private String $nome;
+class Tripulante extends Pessoa
+{
+
     private String $licenca;
-    private String $cargo;
+    private Cargo $cargo;
 
-    public function __construct () {
-        
-    }
-
-    public function setNome (string $nome):void {
-        $this->nome = $nome;
-    }
-
-    public function getNome ():string {
-        return $this->nome;
-    }
-
-    public function setLicenca (string $licenca):void {
+    public function __construct(string $nome, string $email, string $cpf, String $licenca, Cargo $cargo)
+    {
         $this->licenca = $licenca;
+        $this->cargo = $cargo;
+        parent::__construct($nome, $email, $cpf);
     }
 
-    public function getLicenca ():string {
+    public function getLicenca(): String
+    {
         return $this->licenca;
     }
 
-    public function setCargo (string $cargo):void {
-        $this->cargo = $cargo;
+    public function getCargo(): Cargo
+    {
+        return $this->cargo;
     }
 
-    public function getCargo ():string {
-        return $this->cargo;
+    public function setLicenca(String $licenca): void
+    {
+        $this->licenca = $licenca;
+    }
+
+    public function setCargo(Cargo $cargo): void
+    {
+        $this->cargo = $cargo;
     }
 }
