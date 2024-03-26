@@ -1,8 +1,28 @@
 <?php
-require_once 'models/Aeronave.php';
 
-$aeronave = new Aeronave();
+namespace otavio\PooAeroportoPhp;
 
-$aeronave->setModelo('Boing 777-800');
-$aeronave->setCapacidade(600);
-$aeronave->editarStatus('VOANDO');
+/*$usuarios = [];
+
+$contadorLogin = 0;
+
+while ($contadorLogin != 3) 
+{
+    echo "1. Login\n2. Cadastrar\n3. Sair\n";
+    $contadorLogin = readline();
+}
+
+function cadastrar() 
+{
+    echo "Digite seu nome:\n";
+    $nome = readline();
+
+    echo "Digite seu email:\n";
+    $email = readline();
+
+    echo "Digite seu cpf:\n";
+    $cpf = readline();
+
+    echo "Digite sua senha:\n";
+    $senha = readline()
+}*/

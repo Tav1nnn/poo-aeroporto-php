@@ -2,7 +2,7 @@
 
 namespace otavio\PooAeroportoPhp;
 
-class Tripulante {
+class Tripulante extends Pessoa{
     
     private String $nome;
     private String $licenca;

@@ -2,42 +2,46 @@
 
 namespace otavio\PooAeroportoPhp;
 
-class Aeronave {
+class Aeronave
+{
     private string $modelo;
     private int $capacidade;
-    private string $status;
+    private Status $status;
 
-    public function __construct() {
-        
-    }
-    
-    public function setModelo (string $modelo):void {
+    public function __construct(string $modelo, int $capacidade, Status $status)
+    {
         $this->modelo = $modelo;
+        $this->capacidade = $capacidade;
+        $this->status = $status;
     }
 
-    public function getModelo ():string {
+    public function getModelo(): string
+    {
         return $this->modelo;
     }
 
-    public function setCapacidade (int $capacidade) {
-        $this->capacidade = $capacidade;
-    }
-
-    public function getCapacidade ():int {
+    public function getCapacidade(): int
+    {
         return $this->capacidade;
     }
 
-    public function editarStatus (string $status): void {
-        if ($status == 'MANUTENÇÃO' ||
-            $status == 'LIVRE' ||
-            $status == 'INATIVO'
-        ) {
-            $this->status = $status;
-        } 
-
+    public function getStatus(): Status
+    {
+        return $this->status;
     }
 
-    public function getStatus ():string {
-        return $this->status;
+    public function setModelo(string $modelo): void
+    {
+        $this->modelo = $modelo;
+    }
+
+    public function setCapacidade(int $capacidade): void
+    {
+        $this->capacidade = $capacidade;
+    }
+
+    public function setStatus(Status $status): void
+    {
+        $this->status = $status;
     }
 }

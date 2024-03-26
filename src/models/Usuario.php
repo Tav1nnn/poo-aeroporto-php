@@ -2,36 +2,24 @@
 
 namespace otavio\PooAeroportoPhp;
 
-class Usuario {
-    private string $nome;
-    private string $email;
-    private string $cpf;
+class Usuario extends Pessoa
+{
+    private string $senha;
+    private bool $isAdm;
 
-    public function __construct() {
-        
+    public function __construct(string $senha)
+    {
+        $this->senha = $senha;
+        $this->isAdm = null;
     }
 
-    public function getNome(): string {
-        return $this->nome;
-    }
+    public function getSenha(): string {return $this->senha;}
 
-    public function setNome(string $nome): void {
-        $this->nome = $nome;
-    }
+	public function getIsAdm(): bool {return $this->isAdm;}
 
-    public function getEmail(): string {
-        return $this->email;
-    }
+	public function setSenha(string $senha): void {$this->senha = $senha;}
 
-    public function setEmail(string $email): void {
-        $this->email = $email;
-    }
+	public function setIsAdm(bool $isAdm): void {$this->isAdm = $isAdm;}
 
-    public function getCpf(): string {
-        return $this->cpf;
-    }
-
-    public function setCpf(string $cpf): void {
-        $this->cpf = $cpf;
-    }
+	
 }
