@@ -1,10 +1,6 @@
 <?php
 
-namespace otavio\PooAeroportoPhp\models;
-require_once('Pessoa.php');
-use otavio\PooAeroportoPhp\models\Pessoa; 
-require_once('enums/Cargo.php'); 
-use otavio\PooAeroportoPhp\models\enums\Cargo; 
+namespace otavio\PooAeroportoPhp;
 
 
 class Tripulante extends Pessoa

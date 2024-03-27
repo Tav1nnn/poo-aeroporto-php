@@ -1,11 +1,6 @@
 <?php
 
 namespace otavio\PooAeroportoPhp;
-
-require_once('models/Tripulante.php');
-require_once('models/enums/Cargo.php'); // Import Cargo class
-use otavio\PooAeroportoPhp\models\Tripulante; // Import Tripulante class
-use otavio\PooAeroportoPhp\models\enums\Cargo; // Import Cargo class
 use DateTime;
 
 $tripulante1 = new Tripulante("Tripulante 1", "tripulante1@example.com", "111.111.111-11", "Licença 1", Cargo::PILOTO);

@@ -1,6 +1,6 @@
 <?php
 
-namespace otavio\PooAeroportoPhp\models\enums;
+namespace otavio\PooAeroportoPhp;
 
 enum Cargo: string
 {

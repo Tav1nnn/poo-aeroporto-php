@@ -1,6 +1,7 @@
 <?php
 
-namespace otavio\PooAeroportoPhp\models;
+namespace otavio\PooAeroportoPhp;
+
 
 abstract class Pessoa
 {
