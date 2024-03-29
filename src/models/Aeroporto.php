@@ -4,7 +4,6 @@ namespace otavio\PooAeroportoPhp;
 
 class Aeroporto
 {
-
     private string $nome;
     private string $codigoIATA;
     private string $cep;
@@ -13,32 +12,34 @@ class Aeroporto
     private int $pistaDisponivel;
     private array $voos;
 
-    public function __construct(string $nome, string $codigoIATA, string $cep, string $endereco, int $numPistas, int $pistaDisponivel)
+    public function __construct(string $nome, string $codigoIATA, string $cep, string $endereco, int $numPistas)
     {
         $this->nome = $nome;
         $this->codigoIATA = $codigoIATA;
         $this->cep = $cep;
         $this->endereco = $endereco;
         $this->numPistas = $numPistas;
-        $this->pistaDisponivel = $pistaDisponivel;
+        $this->pistaDisponivel = $numPistas;
         $this->voos = [];
     }
 
 
     public function adicionarVoo(Voo $voo): void
     {
+        if($this->pistaDisponivel > 0)
+        {
+            array_push($this->voos, $voo);
+            $this->pistaDisponivel--;
+        }
     }
 
     public function removerVoo(Voo $voo): void
     {
-    }
-
-    public function reservarPista(): void
-    {
-    }
-
-    public function cancelarReservaPista(): void
-    {
+        $index = array_search($voo, $this->voos, true);
+        if ($index !== false) {
+            unset($this->voos[$index]);
+            $this->pistaDisponivel++;
+        }
     }
 
     public function getNome(): string
@@ -88,7 +89,11 @@ class Aeroporto
 
     public function setNumPistas(int $numPistas): void
     {
-        $this->numPistas = $numPistas;
+       if($numPistas > $this->numPistas - $this->pistaDisponivel)
+       {
+            $this->pistaDisponivel = $numPistas - ($this->numPistas - $this->pistaDisponivel);
+            $this->numPistas = $numPistas;
+       }
     }
 
     public function getPistaDisponivel(): int
@@ -96,18 +101,8 @@ class Aeroporto
         return $this->pistaDisponivel;
     }
 
-    public function setPistaDisponivel(int $pistaDisponivel): void
-    {
-        $this->pistaDisponivel = $pistaDisponivel;
-    }
-
     public function getVoos()
     {
         return $this->voos;
-    }
-
-    public function setVoos($voos): void
-    {
-        $this->voos = $voos;
     }
 }

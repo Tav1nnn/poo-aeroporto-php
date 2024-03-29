@@ -2,6 +2,9 @@
 
 namespace otavio\PooAeroportoPhp;
 
+require_once "Aeronave.php";
+require_once "Aeroporto.php";
+
 use DateTime;
 
 class Voo
@@ -23,21 +26,21 @@ class Voo
         $this->horarioChegada = $horarioChegada;
         $this->aeronave = $aeronave;
         $this->escalas = [];
-        $this->tripulacao = [4];
-        $this->passageiros = [$aeronave->getCapacidade() - 4];
+        $this->tripulacao = [];
+        $this->passageiros = [];
     }
 
 
-    public function calculaTempoVoo(): int
+    public function calculaTempoVoo(): String
     {
         $diferenca = $this->horarioSaida->diff($this->horarioChegada);
 
-        return ($diferenca->h * 60) + $diferenca->m;
+        return ($diferenca->h * 60) + $diferenca->m. " minutos";
     }
 
     public function adicionarEscala(Aeroporto $aeroporto)
     {
-        if ($aeroporto != $this->origem || $aeroporto != $this->destino) {
+        if ($aeroporto != $this->origem && $aeroporto != $this->destino) {
             array_push($this->escalas, $aeroporto);
         }
     }
