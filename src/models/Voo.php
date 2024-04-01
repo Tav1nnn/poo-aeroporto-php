@@ -9,6 +9,7 @@ use DateTime;
 
 class Voo
 {
+    private string $codigo;
     private Aeroporto $destino;
     private Aeroporto $origem;
     private  array $escalas;
@@ -18,8 +19,9 @@ class Voo
     private  array $tripulacao;
     private array $passageiros;
 
-    public function __construct(Aeroporto $destino, Aeroporto $origem, DateTime $horarioSaida, DateTime $horarioChegada, Aeronave $aeronave)
+    public function __construct(string $codigo, Aeroporto $destino, Aeroporto $origem, DateTime $horarioSaida, DateTime $horarioChegada, Aeronave $aeronave)
     {
+        $this->codigo = $codigo;
         $this->destino = $destino;
         $this->origem = $origem;
         $this->horarioSaida = $horarioSaida;
@@ -35,7 +37,7 @@ class Voo
     {
         $diferenca = $this->horarioSaida->diff($this->horarioChegada);
 
-        return ($diferenca->h * 60) + $diferenca->m. " minutos";
+        return ($diferenca->h * 60) + $diferenca->m . " minutos";
     }
 
     public function adicionarEscala(Aeroporto $aeroporto)
@@ -57,29 +59,21 @@ class Voo
         $contPiloto = 0;
         $contCoPiloto = 0;
 
-        foreach ($this->tripulacao as $tripulante) 
-        {
-            if ($tripulante->getCargo() === Cargo::AEROMOCA) 
-            {
+        foreach ($this->tripulacao as $tripulante) {
+            if ($tripulante->getCargo() === Cargo::AEROMOCA) {
                 $contAeromoca++;
-
-            } elseif ($tripulante->getCargo() === Cargo::PILOTO)
-            {
-                $contPiloto ++;
-            } else
-            {
+            } elseif ($tripulante->getCargo() === Cargo::PILOTO) {
+                $contPiloto++;
+            } else {
                 $contCoPiloto++;
             }
         }
 
-        if($tripulante->getCargo() === Cargo::AEROMOCA && $contAeromoca < 2)
-        {
+        if ($tripulante->getCargo() === Cargo::AEROMOCA && $contAeromoca < 2) {
             array_push($tripulacao, $tripulante);
-        } elseif($tripulante->getCargo() === Cargo::PILOTO && $contPiloto < 1)
-        {
+        } elseif ($tripulante->getCargo() === Cargo::PILOTO && $contPiloto < 1) {
             array_push($tripulacao, $tripulante);
-        } elseif ($contCoPiloto < 1)
-        {
+        } elseif ($contCoPiloto < 1) {
             array_push($tripulacao, $tripulante);
         }
     }
@@ -169,5 +163,10 @@ class Voo
     public function setPassageiros(array $passageiros): void
     {
         $this->passageiros = $passageiros;
+    }
+
+    public function getCodigo(): string
+    {
+        return $this->codigo;
     }
 }

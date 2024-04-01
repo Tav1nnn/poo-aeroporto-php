@@ -23,22 +23,38 @@ class Aeroporto
         $this->voos = [];
     }
 
-
-    public function adicionarVoo(Voo $voo): void
+    protected function adicionarVoo(Voo $voo): void
     {
-        if($this->pistaDisponivel > 0)
-        {
-            array_push($this->voos, $voo);
+        if ($this->pistaDisponivel > 0 && !$this->contemVoo($voo)) {
+            $this->voos[] = $voo; 
             $this->pistaDisponivel--;
         }
     }
 
-    public function removerVoo(Voo $voo): void
+    protected function removerVoo(Voo $voo): void
     {
-        $index = array_search($voo, $this->voos, true);
-        if ($index !== false) {
+        if ($this->contemVoo($voo)) {
+            $index = array_search($voo, $this->voos, true);
             unset($this->voos[$index]);
             $this->pistaDisponivel++;
+        }
+    }
+
+    private function contemVoo(Voo $voo): bool
+    {
+        foreach ($this->voos as $v) {
+            if ($v === $voo) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function editarNumPistas(int $numPistas): void
+    {
+        if ($numPistas > $this->numPistas - $this->pistaDisponivel) {
+            $this->pistaDisponivel = $numPistas - ($this->numPistas - $this->pistaDisponivel);
+            $this->numPistas = $numPistas;
         }
     }
 
@@ -87,15 +103,6 @@ class Aeroporto
         return $this->numPistas;
     }
 
-    public function setNumPistas(int $numPistas): void
-    {
-       if($numPistas > $this->numPistas - $this->pistaDisponivel)
-       {
-            $this->pistaDisponivel = $numPistas - ($this->numPistas - $this->pistaDisponivel);
-            $this->numPistas = $numPistas;
-       }
-    }
-
     public function getPistaDisponivel(): int
     {
         return $this->pistaDisponivel;
@@ -104,5 +111,29 @@ class Aeroporto
     public function getVoos()
     {
         return $this->voos;
+    }
+
+    public function __toString(): string
+    {
+        return sprintf(
+            "{nome : %s, codigoIATA : %s, cep : %s, endereco : %s, numPistas : %d, pistaDisponivel : %d, CodigosVoos : [%s]}",
+            $this->nome,
+            $this->codigoIATA,
+            $this->cep,
+            $this->endereco,
+            $this->numPistas,
+            $this->pistaDisponivel,
+            $this->formatarVoos()
+        );
+    }
+
+    private function formatarVoos(): string
+    {
+        $voosFormatados = '';
+        foreach ($this->voos as $voo) {
+            $voosFormatados .= $voo->getCodigo() . ', ';
+        }
+        $voosFormatados = rtrim($voosFormatados, ', ');
+        return $voosFormatados;
     }
 }
