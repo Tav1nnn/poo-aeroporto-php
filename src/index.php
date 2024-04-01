@@ -41,7 +41,11 @@ $bagagem = new Bagagem(10, 123423, $usuario);
 // $passagem = new Passagem("123",123.1, $voo, $usuario);
 // // echo $passagem;
 
-// /*_____TESTANDO CHECKIN_____*/
+/*_____TESTANDO CHECKIN_____*/
 // $chekin = new Checkin($usuario, $passagem, $bagagem);
 // echo $chekin;
+
+/*_____TESTE AERONAVE_____*/
+$aeronave = new Aeronave("Boeing 747", 416);
+echo $aeronave;
 

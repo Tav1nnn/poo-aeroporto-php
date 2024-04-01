@@ -8,11 +8,11 @@ class Aeronave
     private int $capacidade;
     private Status $status;
 
-    public function __construct(string $modelo, int $capacidade, Status $status)
+    public function __construct(string $modelo, int $capacidade)
     {
         $this->modelo = $modelo;
         $this->capacidade = $capacidade;
-        $this->status = $status;
+        $this->status = Status::DISPONIVEL;
     }
 
     public function getModelo(): string
@@ -43,5 +43,11 @@ class Aeronave
     public function setStatus(Status $status): void
     {
         $this->status = $status;
+    }
+
+    public function __toString(): string
+    {
+        return sprintf("Aeronave {modelo : %s, capacidade : %d, status : %s}", 
+        $this->modelo, $this->capacidade, $this->status->value);
     }
 }
