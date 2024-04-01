@@ -15,11 +15,6 @@ class Bagagem
         $this->usuario = $usuario;
     }
 
-    protected function validar(Usuario $usuario, Bagagem $bagagem): bool
-    {
-        return $usuario === $bagagem->getUsuario();
-    }
-
     public function getPeso(): float
     {
         return $this->peso;

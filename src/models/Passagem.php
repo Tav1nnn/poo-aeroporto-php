@@ -51,4 +51,15 @@ class Passagem
     {
         return $this->usuario;
     }
+
+    public function __toString(): string
+{
+    return sprintf(
+        'Bilhete {codBilhete : %s,valor  :%s, voo : %s , usuario : %s}',
+        $this->codBilhete,
+        $this->valor,
+        $this->voo,
+        $this->usuario
+    );
+}
 }
