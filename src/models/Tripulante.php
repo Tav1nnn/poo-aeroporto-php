@@ -35,4 +35,15 @@ class Tripulante extends Pessoa
     {
         $this->cargo = $cargo;
     }
+
+    public function __toString(): string
+    {
+        return json_encode([
+            'nome' => $this->getNome(),
+            'email' => $this->getEmail(),
+            'cpf' => $this->getCpf(),
+            'licenca' => $this->licenca,
+            'cargo' => $this->cargo->value,
+        ]);
+    }
 }

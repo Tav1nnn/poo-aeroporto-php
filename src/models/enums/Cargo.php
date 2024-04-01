@@ -6,5 +6,5 @@ enum Cargo: string
 {
     case PILOTO = "Piloto";
     case COPILOTO = "Co-piloto";
-    case AEROMOCA = "Aeromoça";
+    case AEROMOCA = "Aeromoca";
 }

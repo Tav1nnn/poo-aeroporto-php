@@ -15,7 +15,13 @@ require_once "models/Voo.php";
 use DateTime;
 
 
-/*TESTANDO CLASSE USUARIO*/
-$usuario = new Usuario("Fulano", "fulano@example.com", "123.456.789-00", "Cidade Exemplo", "Endereço Exemplo");
+/*_____TESTANDO CLASSE USUARIO_____*/
+// $usuario = new Usuario("Fulano", "fulano@example.com", "123.456.789-00", "Cidade Exemplo", "Endereço Exemplo");
+// echo $usuario;
 
-echo $usuario;
+/*_____TESTANDO CLASSE TRIPULANTE_____*/
+$tripulante = new Tripulante("João", "joao@example.com", "123.456.789-00", "ABC123", Cargo::AEROMOCA);
+echo $tripulante;
+
+$tripulante->setCargo(Cargo::COPILOTO);
+echo $tripulante;
