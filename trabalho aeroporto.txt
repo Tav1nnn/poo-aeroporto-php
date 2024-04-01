@@ -1,0 +1,100 @@
+TRABALHO AEROPORTO
+
+- class Pessoa ☑
+	- classe abstrata com as propiedades de pessoa
+	
+- class Tripulante ☑
+	- classe que extende de pessoa
+	- tem a licença 
+	- tem o cargo que é um enum 
+
+- class Usuario ☑
+	- classe que extende de pessoa
+	- adiciona cidade e endereço
+
+- class Bagagem ☑
+	- peso e numBagagem
+	- Usuario atrelado a essa bagagem
+	- não pode alterar o Usuario (remover set)
+	- metodo protegido para validar bagagem
+	
+- class Passagem ☑
+	- não pode alterar o Usuario (remover set)
+	- atrelar um voo que já existe
+	- metodo que chame adicionarPassageiro da classe Voo
+	
+- class Cheking ☑
+	- validar se o Usuario da passagem é o da passagem
+	- validar se o Usuario tem uma bagagem atrelado a ele
+	- metodo de validar pode ser protected porque só Voo vai chamar
+
+- class Aeroporto
+	- metodos adicionarVoo e removerVoo pode ser protected porque só a classe Voo vai usar
+	- metodo adicionarVoo
+		1. quando um Voo é criado tem que ser adicionado na lista "voos" de Aeroporto
+		2. conferir se tem pistas disponiveis 
+		3. diminuir quantidade de pista disponivel 
+	
+	- metodo removerVoo
+		1. quando remover um Voo liberar uma pista
+	
+	- setNumPistas
+		1. lógica para não deixar o novo numero de pistas ser menor que as pistas em uso
+	
+- class Aeronave
+	- modelo, capacidade, status
+	- remover o setModelo
+	- iniciar com status disponivel
+	- quando adicionada em um Voo passar para oculpado
+	
+- class Voo
+	- metodo adicionarAeronave
+		1. validar se o status da aeronave esta como disponivel, se estiver ja passar para oculpado
+
+	- metodo adicionarOrigem
+		1. metodo para acessar adicionarVoo da classe Aeroporto
+		
+	- metodo adicionarDestino
+		1. metodo para acessar adicionarVoo da classe Aeroporto
+		
+	- metodo setStatus
+		1. se o status passar ser false chamar removerVoo da classe Aeroporto
+	
+	- metodo calcularTempoVoo
+		1. calcular quando tempo em minutos vai demorar o voo
+	
+	- metodo adicionarEscala
+		1. adicionar escala de voo recebendo um Aeroporto 
+			OBS: escalas tem que ser adicionadas como Voo na classe Aeroporto
+	
+	- metodo removerEscala
+		1. remover uma escala de voo recebendo um aeroporto
+			OBS: escalas tem que ser removida como Voo na classe Aeroporto
+	
+	- metodo conferirTripulantes
+		1. metodo que confira quantos tripulantes tem na lista de tripulantes
+			1 PILOTO
+			1 COPILOTO
+			2 AEROMOCA
+		2. retornar um array com os valores
+
+	- metodo adicionarTripulante
+		1. conferir como esta a frota de tripulantes
+		2. se estiver sobrando a vaga adicione 
+	
+	- metodo removerTripulante
+		1. receber o tripulante e remover ele
+	
+	- metodo adicionarPassageiro
+		1. o metodo pode ser protected porque só a classe Passagem vai usar
+		2. validar se tem vaga disponivel
+	
+	- metodo removerpassageiro 
+		1. receber o usuario e remover da lista de passageiros
+		
+	- metodo prepararVoo 
+		1. conferir se status é true
+		2. conferir a equipe de tripulante 
+		3. validar cheking de todos os passageiros criando uma nova lista de passageiros
+		
+		
