@@ -15,6 +15,11 @@ class Bagagem
         $this->usuario = $usuario;
     }
 
+    protected function validar(Usuario $usuario, Bagagem $bagagem): bool
+    {
+        return $usuario === $bagagem->getUsuario();
+    }
+
     public function getPeso(): float
     {
         return $this->peso;
@@ -38,5 +43,15 @@ class Bagagem
     public function getUsuario(): Usuario
     {
         return $this->usuario;
+    }
+
+    public function __toString(): string
+    {
+        return sprintf(
+            'Bagagem {peso : %s, numBagagem : %s,usuario : %s}',
+            $this->peso,
+            $this->numBagagem,
+            $this->usuario
+        );
     }
 }

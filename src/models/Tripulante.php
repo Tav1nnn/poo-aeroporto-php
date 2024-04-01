@@ -38,12 +38,13 @@ class Tripulante extends Pessoa
 
     public function __toString(): string
     {
-        return json_encode([
-            'nome' => $this->getNome(),
-            'email' => $this->getEmail(),
-            'cpf' => $this->getCpf(),
-            'licenca' => $this->licenca,
-            'cargo' => $this->cargo->value,
-        ]);
+        return sprintf(
+            'Tripulante {nome : %s, email : %s, cpf : %s, licenca : %s, cargo : %s}',
+            $this->nome,
+            $this->email,
+            $this->cpf,
+            $this->licenca,
+            $this->cargo->value
+        );
     }
 }

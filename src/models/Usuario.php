@@ -36,12 +36,13 @@ class Usuario extends Pessoa
 
     public function __toString(): string
     {
-        return "Usuario ". json_encode([
-            'nome' => $this->nome,
-            'email' => $this->email,
-            'cpf' => $this->cpf,
-            'cidade' => $this->cidade,
-            'endereco' => $this->endereco
-        ]);
+        return sprintf(
+            'Usuario {nome : %s, email : %s , cpf : %s , cidade : %s , endereco : %s }',
+            $this->nome,
+            $this->email,
+            $this->cpf,
+            $this->cidade,
+            $this->endereco
+        );
     }
 }

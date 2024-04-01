@@ -16,12 +16,16 @@ use DateTime;
 
 
 /*_____TESTANDO CLASSE USUARIO_____*/
-// $usuario = new Usuario("Fulano", "fulano@example.com", "123.456.789-00", "Cidade Exemplo", "Endereço Exemplo");
+ $usuario = new Usuario("Fulano", "fulano@example.com", "123.456.789-00", "Cidade Exemplo", "Endereço Exemplo");
 // echo $usuario;
 
 /*_____TESTANDO CLASSE TRIPULANTE_____*/
-$tripulante = new Tripulante("João", "joao@example.com", "123.456.789-00", "ABC123", Cargo::AEROMOCA);
-echo $tripulante;
+ $tripulante = new Tripulante("João", "joao@example.com", "123.456.789-00", "ABC123", Cargo::AEROMOCA);
+// echo $tripulante;
 
-$tripulante->setCargo(Cargo::COPILOTO);
-echo $tripulante;
+// $tripulante->setCargo(Cargo::COPILOTO);
+// echo $tripulante;
+
+/*_____TESTANDO CLASSE BAGAGEM_____*/
+$bagagem = new Bagagem(10, 123423, $usuario);
+// echo $bagagem;
