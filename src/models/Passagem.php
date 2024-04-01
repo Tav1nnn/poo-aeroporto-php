@@ -55,7 +55,7 @@ class Passagem
     public function __toString(): string
 {
     return sprintf(
-        'Bilhete {codBilhete : %s,valor  :%s, voo : %s , usuario : %s}',
+        "Bilhete {codBilhete : %s, valor : %s, \nvoo : %s , \nusuario : %s}",
         $this->codBilhete,
         $this->valor,
         $this->voo,

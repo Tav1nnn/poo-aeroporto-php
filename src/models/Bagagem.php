@@ -43,7 +43,7 @@ class Bagagem
     public function __toString(): string
     {
         return sprintf(
-            'Bagagem {peso : %s, numBagagem : %s,usuario : %s}',
+            "Bagagem {peso : %s, numBagagem : %s, usuario : %s}",
             $this->peso,
             $this->numBagagem,
             $this->usuario
