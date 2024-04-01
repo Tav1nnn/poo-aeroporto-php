@@ -14,7 +14,7 @@ class Passagem
         $this->codBilhete = $codBilhete;
         $this->valor = $valor;
         $this->voo = $voo;
-        $this->usuario = $usuario;
+        $this->usuario = $usuario;        
     }
 
     public function getCodBilhete(): string
