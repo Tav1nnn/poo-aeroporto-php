@@ -28,7 +28,7 @@ TRABALHO AEROPORTO
 	- validar se o Usuario tem uma bagagem atrelado a ele
 	- metodo de validar pode ser protected porque só Voo vai chamar
 
-- class Aeroporto
+- class Aeroporto ☑
 	- metodos adicionarVoo e removerVoo pode ser protected porque só a classe Voo vai usar
 	- metodo adicionarVoo
 		1. quando um Voo é criado tem que ser adicionado na lista "voos" de Aeroporto
@@ -41,7 +41,7 @@ TRABALHO AEROPORTO
 	- setNumPistas
 		1. lógica para não deixar o novo numero de pistas ser menor que as pistas em uso
 	
-- class Aeronave
+- class Aeronave ☑
 	- modelo, capacidade, status
 	- remover o setModelo
 	- iniciar com status disponivel

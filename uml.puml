@@ -1,0 +1,148 @@
+@startuml Aeroporto
+
+enum Cargo {
+    PILOTO = "Piloto"
+    COPILOTO = "Co-piloto"
+    AEROMOCA = "Aeromoça"
+}
+
+enum Status {
+    DISPONIVEL = 'disponivel'
+    OCULPADO = 'oculpado'
+    MANUTENCAO = 'manutencao'
+}
+
+abstract class Pessoa {
+    # nome: string
+    # email: string
+    # cpf: string
+    
+    {abstract} + __construct(nome: string, email: string, cpf: string)
+    + getNome(): string
+    + setNome(nome: string): void
+    + getEmail(): string
+    + setEmail(email: string): void
+    + getCpf(): string
+    + setCpf(cpf: string): void
+}
+
+class Usuario {
+    - cidade: string
+    - endereco: string
+    
+    + __construct(nome: string, email: string, cpf: string, cidade: string, endereco: string)
+    + setCidade(cidade: string): void
+    + setEndereco(endereco: string): void
+    + getCidade(): string
+    + getEndereco(): string
+    + __toString(): string
+}
+
+class Tripulante {
+    - licenca: String
+    - cargo: Cargo
+    
+    + __construct(nome: string, email: string, cpf: string, licenca: string, cargo: Cargo)
+    + getLicenca(): String
+    + getCargo(): Cargo
+    + setLicenca(licenca: String): void
+    + setCargo(cargo: Cargo): void
+    + __toString(): string
+}
+
+class Bagagem {
+  + peso: float
+  + numBagagem: int
+  + usuario Usuario
+  
+  + __construct(peso: float, numBagagem: int, usuario: Usuario)
+  + getPeso(): float
+  + setPeso(peso: float): void
+  + getNumBagagem(): int
+  + setNumBagagem(numBagagem: int): void
+  + getUsuario(): Usuario
+  + __toString(): string
+}
+
+class Aeronave {
+ -string $modelo
+ -int $capacidade
+ -Status $status
+ +__construct(string $modelo, int $capacidade)
+ +getModelo(): string
+ +getCapacidade(): int
+ +getStatus(): Status
+ +setModelo(string $modelo): void
+ +setCapacidade(int $capacidade): void
+ +setStatus(Status $status): void
+ +__toString(): string
+}
+
+class Passagem {
+ -string $codBilhete
+ -float $valor
+ -Voo $voo
+ -Usuario $usuario
+ +__construct(string $codBilhete, float $valor, Voo $voo, Usuario $usuario)
+ +getCodBilhete(): string
+ +setCodBilhete(string $codBilhete): void
+ +getValor(): float
+ +setValor(float $valor): void
+ +getVoo(): Voo
+ +setVoo(Voo $voo): void
+ +getUsuario(): Usuario
+ +__toString(): string
+}
+
+class Checkin {
+ -Usuario $usuario
+ -Passagem $passagem
+ -Bagagem $bagagem
+ +__construct(Usuario $usuario, Passagem $passagem, Bagagem $bagagem)
+ +validar(Usuario $usuario, Passagem $passagem, Bagagem $bagagem): bool
+ +getUsuario(): Usuario
+ +getPassagem(): Passagem
+ +getBagagem(): Bagagem
+ +__toString(): string
+}
+
+class Aeroporto {
+ -string $nome
+ -string $codigoIATA
+ -string $cep
+ -string $endereco
+ -int $numPistas
+ -int $pistaDisponivel
+ -array $voos
+ +__construct(string $nome, string $codigoIATA, string $cep, string $endereco, int $numPistas)
+ #adicionarVoo(Voo $voo): void
+ #removerVoo(Voo $voo): void
+ -contemVoo(Voo $voo): bool
+ +editarNumPistas(int $numPistas): void
+ +getNome(): string
+ +setNome(string $nome): void
+ +getCodigoIATA(): string
+ +setCodigoIATA(string $codigoIATA): void
+ +getCep(): string
+ +setCep(string $cep): void
+ +getEndereco(): string
+ +setEndereco(string $endereco): void
+ +getNumPistas(): int
+ +getPistaDisponivel(): int
+ +getVoos()
+ +__toString(): string
+ +formatarVoos(): string
+}
+Pessoa <|-- Usuario
+Pessoa <|-- Tripulante
+Tripulante "1" --> "1" Cargo
+Bagagem "1" --> "1" Usuario
+Aeronave "1" --> "1" Status
+Checkin "1" --> "1" Usuario 
+Checkin "1" --> "1" Passagem 
+Checkin "1" --> "1" Bagagem 
+Aeroporto "1" --> "*" Voo 
+Passagem "1" --> "1" Voo 
+Passagem "1" --> "1" Usuario
+
+@enduml
