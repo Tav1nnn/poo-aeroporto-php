@@ -161,14 +161,10 @@ class Voo
     {
         $qtdTripulacao = $this->verificarTripulacao();
 
-        if($this->statusVoo
+         return $this->statusVoo
             && $qtdTripulacao[0] == 2
             && $qtdTripulacao[1] == 1
-            && $qtdTripulacao[2] == 1)
-        {
-            return true;
-        }
-        return false;
+            && $qtdTripulacao[2] == 1;
     }
 
     public function setCodigo(String $codigo)
