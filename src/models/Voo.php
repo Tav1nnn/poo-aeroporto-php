@@ -146,13 +146,9 @@ class Voo
         unset($this->tripulacao[$index]);
     }
 
-    public function adicionarPassageiro(Usuario $passageiro, Passagem $passagem)
+    public function adicionarPassageiro(Usuario $passageiro)
     {
-        if($this->aeronave->getCapacidade() > (sizeof($this->passageiros)+4) 
-            && $passageiro === $passagem->getUsuario())
-        {
-            array_push($this->passageiros, $passageiro);
-        }
+        array_push($this->passageiros, $passageiro);
     }
 
     public function removerPassageiro(Usuario $usuario)
@@ -166,9 +162,9 @@ class Voo
         $qtdTripulacao = $this->verificarTripulacao();
 
         if($this->statusVoo
-            && $qtdTripulacao == 2
-            && $qtdTripulacao == 1
-            && $qtdTripulacao == 1)
+            && $qtdTripulacao[0] == 2
+            && $qtdTripulacao[1] == 1
+            && $qtdTripulacao[2] == 1)
         {
             return true;
         }
@@ -238,15 +234,15 @@ class Voo
     public function __toString(): string
     {
         return sprintf(
-            "Voo \n{codigo: %s, \nstatusVoo: %s, \ndestino: %s, \norigem: %s, \nescalas: %s, \nhorarioSaida: %s, \nhorarioChegada: %s, \naeronave: %s, \ntripulacao: %s, \npassageiros: %s}",
+            "VOO {\nCODIGO: %s, \nSTATUSVOO: %s, \nDESTINO: %s, \nORIGEM: %s, \nESCALAS: %s, \nHORARIO-SAIDA: %s, \nHORARIO-CHEGADA: %s, \nAERONAVE: %s, \nTRIPULACAO: %s, \nPASSAGEIROS: %s\n}",
             $this->codigo,
             $this->statusVoo ? 'true' : 'false',
-            $this->destino,
-            $this->origem,
+            $this->destino->getNome(),
+            $this->origem->getNome(),
             $this->formatarAeroporto(),
             $this->horarioSaida->format('Y-m-d H:i:s'),
             $this->horarioChegada->format('Y-m-d H:i:s'),
-            $this->aeronave,
+            $this->aeronave->getModelo(),
             $this->formatarTripulante(),
             $this->formatarPassageiro()
         );
@@ -272,7 +268,7 @@ class Voo
         $tripulanteFormatado = '';
         foreach($this->tripulacao as $tripulante)
         {
-            $tripulanteFormatado .= $tripulante->getNome() . ', ';
+            $tripulanteFormatado .= $tripulante->getNome() .  ', ';
         }
         $tripulanteFormatado = rtrim($tripulanteFormatado, ', ');
 

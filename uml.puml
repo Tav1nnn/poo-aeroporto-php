@@ -133,6 +133,47 @@ class Aeroporto {
  +__toString(): string
  +formatarVoos(): string
 }
+
+ class Voo {
+        -codigo: string
+        -statusVoo: bool
+        -destino: Aeroporto
+        -origem: Aeroporto
+        -escalas: array
+        -horarioSaida: DateTime
+        -horarioChegada: DateTime
+        -aeronave: Aeronave
+        -tripulacao: array
+        -passageiros: array
+        +__construct()
+        +adicionarAeronave(aeronave: Aeronave): void
+        +adicionarOrigem(aeroporto: Aeroporto): void
+        +adicionarDestino(aeroporto: Aeroporto): void
+        +cancelarVoo(): void
+        +calculaTempoVoo(): String
+        +adicionarEscala(aeroporto: Aeroporto): void
+        +removerEscala(aeroporto: Aeroporto): void
+        +adicionarTripulante(tripulante: Tripulante): void
+        +removerTripulante(tripulante: Tripulante): void
+        +adicionarPassageiro(passageiro: Usuario, passagem: Passagem): void
+        +removerPassageiro(usuario: Usuario): void
+        +prepararParaVoo(): bool
+        +setCodigo(codigo: String): void
+        +setHorarioSaida(horarioSaida: DateTime): void
+        +setHorarioChegada(horarioChegada: DateTime): void
+        +getCodigo(): string
+        +getDestino(): Aeroporto
+        +getOrigem(): Aeroporto
+        +getEscalas(): array
+        +getHorarioSaida(): DateTime
+        +getHorarioChegada(): DateTime
+        +getAeronave(): Aeronave
+        +getTripulacao(): array
+        +getPassageiros(): array
+        +__toString(): string
+    }
+
+
 Pessoa <|-- Usuario
 Pessoa <|-- Tripulante
 Tripulante "1" --> "1" Cargo
@@ -144,5 +185,12 @@ Checkin "1" --> "1" Bagagem
 Aeroporto "1" --> "*" Voo 
 Passagem "1" --> "1" Voo 
 Passagem "1" --> "1" Usuario
+Voo "1" --> "1" Aeroporto : destino
+    Voo "1" --> "1" Aeroporto : origem
+    Voo "0..*" --> "0..*" Aeroporto : escalas
+    Voo "1" --> "1" Aeronave : aeronave
+    Voo "0..*" --> "0..*" Tripulante : tripulacao
+    Voo "0..*" --> "0..*" Usuario : passageiros
+    Voo "*" --> "1" Passagem : 0..* 
 
 @enduml

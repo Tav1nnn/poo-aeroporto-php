@@ -17,7 +17,7 @@ class Checkin
 
     public  function validar(): bool
     {
-        if($this->passagem->getUsuario() == $this->usuario && $this->bagagem->getUsuario() == $this->usuario)
+        if($this->passagem->getUsuario() === $this->usuario && $this->bagagem->getUsuario() === $this->usuario)
         {
             return true;
         }
