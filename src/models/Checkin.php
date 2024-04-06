@@ -15,9 +15,14 @@ class Checkin
         $this->bagagem = $bagagem;
     }
 
-    public  function validar(Usuario $usuario, Passagem $passagem, Bagagem $bagagem): bool
+    public  function validar(): bool
     {
-        return $passagem->getUsuario() == $usuario && $bagagem->getUsuario() == $usuario;
+        if($this->passagem->getUsuario() == $this->usuario && $this->bagagem->getUsuario() == $this->usuario)
+        {
+            return true;
+        }
+        $this->passagem->getVoo()->removerPassageiro($this->usuario);
+        return false;
     }
 
     public function getUsuario(): Usuario

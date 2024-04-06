@@ -2,14 +2,12 @@
 
 namespace otavio\PooAeroportoPhp;
 
-require_once "Aeronave.php";
-require_once "Aeroporto.php";
-
 use DateTime;
 
 class Voo
 {
     private string $codigo;
+    private bool $statusVoo;
     private Aeroporto $destino;
     private Aeroporto $origem;
     private  array $escalas;
@@ -19,45 +17,95 @@ class Voo
     private  array $tripulacao;
     private array $passageiros;
 
-    public function __construct(string $codigo, Aeroporto $destino, Aeroporto $origem, DateTime $horarioSaida, DateTime $horarioChegada, Aeronave $aeronave)
+    public function __construct()
     {
-        $this->codigo = $codigo;
-        $this->destino = $destino;
-        $this->origem = $origem;
-        $this->horarioSaida = $horarioSaida;
-        $this->horarioChegada = $horarioChegada;
-        $this->aeronave = $aeronave;
-        $this->escalas = [];
+        $this->statusVoo = true;
+        $this->escalas=[];
         $this->tripulacao = [];
         $this->passageiros = [];
     }
 
+    public function adicionarAeronave(Aeronave $aeronave): void
+    {
+        if ($aeronave->getStatus() === Status::DISPONIVEL && !isset($this->aeronave)) {
+            $this->aeronave = $aeronave;
+        }
+    }
+
+    public function adicionarOrigem(Aeroporto $aeroporto): void
+    {
+        if (
+            isset($this->aeronave)
+            && !isset($this->origem)
+            && !isset($this->destino)
+            && $aeroporto->getPistaDisponivel() > 0
+        ) {
+            $this->origem = $aeroporto;
+            $this->origem->adicionarVoo($this);
+        }
+    }
+
+    public function adicionarDestino(Aeroporto $aeroporto): void
+    {
+        if (
+            isset($this->aeronave)
+            && isset($this->origem)
+            && $this->origem != $aeroporto
+            && $aeroporto->getPistaDisponivel() > 0
+        ) {
+            $this->destino = $aeroporto;
+            $aeroporto->adicionarVoo($this);
+        }
+    }
+
+    public function cancelarVoo(): void
+    {
+        $this->statusVoo = false;
+        $this->origem->removerVoo($this);
+        $this->destino->removerVoo($this);
+
+        foreach($this->escalas as $escala)
+        {
+            $escala->removerVoo($this);
+        }
+    }
 
     public function calculaTempoVoo(): String
     {
-        $diferenca = $this->horarioSaida->diff($this->horarioChegada);
+        if (isset($this->horarioSaida) && isset($this->horarioChegada)) {
+            $diferenca = $this->horarioSaida->diff($this->horarioChegada);
+            return ($diferenca->h * 60) + $diferenca->m . " minutos";
+        }
 
-        return ($diferenca->h * 60) + $diferenca->m . " minutos";
+        return null;
     }
 
-    public function adicionarEscala(Aeroporto $aeroporto)
+    public function adicionarEscala(Aeroporto $aeroporto): void
     {
-        if ($aeroporto != $this->origem && $aeroporto != $this->destino) {
+        if ($aeroporto != $this->origem 
+            && $aeroporto != $this->destino
+            && $aeroporto->getPistaDisponivel()>0) {
+
             array_push($this->escalas, $aeroporto);
+            $aeroporto->adicionarVoo($this);
         }
     }
 
     public function removerEscala(Aeroporto $aeroporto)
     {
-        $remover = array($aeroporto);
-        $this->escalas = array_diff($this->escalas, $remover);
+        $index = array_search($aeroporto, $this->escalas, true);
+        unset($this->escalas[$index]);
+        $aeroporto->removerVoo($this);
     }
 
-    public function adicionarTripulante(Tripulante $tripulante): void
+
+    private function verificarTripulacao(): array
     {
         $contAeromoca = 0;
         $contPiloto = 0;
         $contCoPiloto = 0;
+
+        $qtdTripulacao = [];
 
         foreach ($this->tripulacao as $tripulante) {
             if ($tripulante->getCargo() === Cargo::AEROMOCA) {
@@ -69,25 +117,82 @@ class Voo
             }
         }
 
-        if ($tripulante->getCargo() === Cargo::AEROMOCA && $contAeromoca < 2) {
-            array_push($tripulacao, $tripulante);
-        } elseif ($tripulante->getCargo() === Cargo::PILOTO && $contPiloto < 1) {
-            array_push($tripulacao, $tripulante);
-        } elseif ($contCoPiloto < 1) {
-            array_push($tripulacao, $tripulante);
+        array_push($qtdTripulacao, $contAeromoca);
+        array_push($qtdTripulacao, $contPiloto);
+        array_push($qtdTripulacao, $contCoPiloto);
+
+        return $qtdTripulacao;
+    }
+
+    public function adicionarTripulante(Tripulante $tripulante): void
+    {
+       $qtdTripulacao = $this->verificarTripulacao();
+
+        if ($tripulante->getCargo() == Cargo::AEROMOCA && $qtdTripulacao[0] < 2) 
+        {
+            array_push($this->tripulacao, $tripulante);
+        } elseif ($tripulante->getCargo() == Cargo::PILOTO && $qtdTripulacao[1] < 1) 
+        {
+            array_push($this->tripulacao, $tripulante);
+        } elseif ($tripulante->getCargo() == Cargo::COPILOTO && $qtdTripulacao[2] < 1) 
+        {
+            array_push($this->tripulacao, $tripulante);
         }
     }
 
-    public function removerTripulante(Tripulante $tripulante)
+    public function removerTripulante (Tripulante $tripulante): void
     {
+        $index = array_search($tripulante, $this->tripulacao, true);
+        unset($this->tripulacao[$index]);
     }
 
-    public function adicionarPassageiro(Passagem $passageiro)
+    public function adicionarPassageiro(Usuario $passageiro, Passagem $passagem)
     {
+        if($this->aeronave->getCapacidade() > (sizeof($this->passageiros)+4) 
+            && $passageiro === $passagem->getUsuario())
+        {
+            array_push($this->passageiros, $passageiro);
+        }
     }
 
-    public function removerPassageiro(Passagem $passageiro)
+    public function removerPassageiro(Usuario $usuario)
     {
+        $index = array_search($usuario, $this->passageiros, true);
+        unset($this->passageiros[$index]);
+    }
+
+    public function prepararParaVoo(): bool
+    {
+        $qtdTripulacao = $this->verificarTripulacao();
+
+        if($this->statusVoo
+            && $qtdTripulacao == 2
+            && $qtdTripulacao == 1
+            && $qtdTripulacao == 1)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function setCodigo(String $codigo)
+    {
+        $this->codigo = $codigo;
+    }
+
+    public function setHorarioSaida(DateTime $horarioSaida): void
+    {
+        $this->horarioSaida = $horarioSaida;
+    }
+
+    public function setHorarioChegada(DateTime $horarioChegada): void
+    {
+        $this->horarioChegada = $horarioChegada;
+    }
+
+    public function getCodigo(): string
+    {
+        return $this->codigo;
     }
 
     public function getDestino(): Aeroporto
@@ -95,19 +200,9 @@ class Voo
         return $this->destino;
     }
 
-    public function setDestino(Aeroporto $destino): void
-    {
-        $this->destino = $destino;
-    }
-
     public function getOrigem(): Aeroporto
     {
         return $this->origem;
-    }
-
-    public function setOrigem(Aeroporto $origem): void
-    {
-        $this->origem = $origem;
     }
 
     public function getEscalas(): array
@@ -120,19 +215,9 @@ class Voo
         return $this->horarioSaida;
     }
 
-    public function setHorarioSaida(DateTime $horarioSaida): void
-    {
-        $this->horarioSaida = $horarioSaida;
-    }
-
     public function getHorarioChegada(): DateTime
     {
         return $this->horarioChegada;
-    }
-
-    public function setHorarioChegada(DateTime $horarioChegada): void
-    {
-        $this->horarioChegada = $horarioChegada;
     }
 
     public function getAeronave(): Aeronave
@@ -140,19 +225,9 @@ class Voo
         return $this->aeronave;
     }
 
-    public function setAeronave(Aeronave $aeronave): void
-    {
-        $this->aeronave = $aeronave;
-    }
-
     public function getTripulacao(): array
     {
         return $this->tripulacao;
-    }
-
-    public function setTripulacao(array $tripulacao): void
-    {
-        $this->tripulacao = $tripulacao;
     }
 
     public function getPassageiros(): array
@@ -160,13 +235,59 @@ class Voo
         return $this->passageiros;
     }
 
-    public function setPassageiros(array $passageiros): void
+    public function __toString(): string
     {
-        $this->passageiros = $passageiros;
+        return sprintf(
+            "Voo \n{codigo: %s, \nstatusVoo: %s, \ndestino: %s, \norigem: %s, \nescalas: %s, \nhorarioSaida: %s, \nhorarioChegada: %s, \naeronave: %s, \ntripulacao: %s, \npassageiros: %s}",
+            $this->codigo,
+            $this->statusVoo ? 'true' : 'false',
+            $this->destino,
+            $this->origem,
+            $this->formatarAeroporto(),
+            $this->horarioSaida->format('Y-m-d H:i:s'),
+            $this->horarioChegada->format('Y-m-d H:i:s'),
+            $this->aeronave,
+            $this->formatarTripulante(),
+            $this->formatarPassageiro()
+        );
     }
 
-    public function getCodigo(): string
+    private function formatarAeroporto(): string
     {
-        return $this->codigo;
+        $aeroportoformatado = '';
+        if(isset($this->escalas)){
+            foreach($this->escalas as $escala)
+            {
+                $aeroportoformatado .= $escala->getNome(). ', ';
+            }
+
+            $aeroportoformatado = rtrim($aeroportoformatado, ', ');
+        }
+        
+        return $aeroportoformatado;
+    }
+
+    private function formatarTripulante(): string
+    {
+        $tripulanteFormatado = '';
+        foreach($this->tripulacao as $tripulante)
+        {
+            $tripulanteFormatado .= $tripulante->getNome() . ', ';
+        }
+        $tripulanteFormatado = rtrim($tripulanteFormatado, ', ');
+
+        return $tripulanteFormatado;
+    }
+
+    private function formatarPassageiro(): string
+    {
+        $passageiroFormatado = '';
+        foreach($this->passageiros as $passageiro)
+        {
+            $passageiroFormatado .= $passageiro->getNome() . ', ';
+        }
+        $passageiroFormatado = rtrim($passageiroFormatado, ', ');
+
+        return $passageiroFormatado;
     }
 }

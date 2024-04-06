@@ -23,21 +23,19 @@ class Aeroporto
         $this->voos = [];
     }
 
-    protected function adicionarVoo(Voo $voo): void
+    public function adicionarVoo(Voo $voo): void //duvida com jucelino
     {
         if ($this->pistaDisponivel > 0 && !$this->contemVoo($voo)) {
-            $this->voos[] = $voo; 
+            $this->voos[] = $voo;
             $this->pistaDisponivel--;
         }
     }
 
-    protected function removerVoo(Voo $voo): void
+    public function removerVoo(Voo $voo): void
     {
-        if ($this->contemVoo($voo)) {
-            $index = array_search($voo, $this->voos, true);
-            unset($this->voos[$index]);
-            $this->pistaDisponivel++;
-        }
+        $index = array_search($voo, $this->voos, true);
+        unset($this->voos[$index]);
+        $this->pistaDisponivel++;
     }
 
     private function contemVoo(Voo $voo): bool
@@ -116,7 +114,7 @@ class Aeroporto
     public function __toString(): string
     {
         return sprintf(
-            "{nome : %s, codigoIATA : %s, cep : %s, endereco : %s, numPistas : %d, pistaDisponivel : %d, CodigosVoos : [%s]}",
+            "Aeroporto {nome : %s, codigoIATA : %s, cep : %s, endereco : %s, numPistas : %d, pistaDisponivel : %d, CodigosVoos : [%s]}",
             $this->nome,
             $this->codigoIATA,
             $this->cep,
